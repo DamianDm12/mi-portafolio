@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Referencias para el menú móvil ---
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const mainNavigation = document.querySelector('.main-navigation');
+
     // --- Referencias a elementos del DOM para el carrito ---
     const cartIcon = document.querySelector('.cart-link');
     const cartCountSpan = document.querySelector('.cart-count');
@@ -77,15 +81,104 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Navegación del carrusel
-    prevButton.addEventListener('click', prevBanner);
-    nextButton.addEventListener('click', nextBanner);
+    if(prevButton && nextButton) {
+        prevButton.addEventListener('click', prevBanner);
+        nextButton.addEventListener('click', nextBanner);
+    }
 
     // Auto-avance del carrusel
     setInterval(nextBanner, 5000); // Cambia cada 5 segundos
 
-    // --- Funciones del Carrito de Compras ---
+    // --- Funcionalidad Táctil para el Carrusel ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isSwiping = false;
 
-    function saveCartToLocalStorage() {
+    carouselInner.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        isSwiping = true;
+        carouselInner.style.transition = 'none'; // Desactivar transición durante el swipe
+    });
+
+    carouselInner.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        const currentX = e.touches[0].clientX;
+        const diffX = currentX - touchStartX;
+        carouselInner.style.transform = `translateX(calc(${-currentBannerIndex * 100}% + ${diffX}px))`;
+    });
+
+    carouselInner.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
+        touchEndX = e.changedTouches[0].clientX;
+        isSwiping = false;
+        carouselInner.style.transition = 'transform 0.5s ease-in-out'; // Reactivar transición
+
+        const swipeThreshold = 50; // Mínimo de 50px para considerarse un swipe
+
+        if (touchStartX - touchEndX > swipeThreshold) {
+            // Swipe a la izquierda (siguiente)
+            nextBanner();
+        } else if (touchEndX - touchStartX > swipeThreshold) {
+            // Swipe a la derecha (anterior)
+            prevBanner();
+        } else {
+            // No fue un swipe válido, volver al banner actual
+            showBanner(currentBannerIndex);
+        }
+    });
+ 
+    // --- Funcionalidad de Arrastre con Mouse para el Carrusel ---
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragEndX = 0;
+
+    carouselInner.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        dragStartX = e.clientX;
+        carouselInner.style.cursor = 'grabbing';
+        carouselInner.style.transition = 'none'; // Desactivar transición durante el arrastre
+    });
+
+    carouselInner.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const currentX = e.clientX;
+        const diffX = currentX - dragStartX;
+        carouselInner.style.transform = `translateX(calc(${-currentBannerIndex * 100}% + ${diffX}px))`;
+    });
+
+    carouselInner.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        dragEndX = e.clientX;
+        carouselInner.style.cursor = 'grab';
+        carouselInner.style.transition = 'transform 0.5s ease-in-out'; // Reactivar transición
+
+        const swipeThreshold = 50; // Mínimo de 50px para considerarse un swipe
+
+        if (dragStartX - dragEndX > swipeThreshold) {
+            // Swipe a la izquierda (siguiente)
+            nextBanner();
+        } else if (dragEndX - dragStartX > swipeThreshold) {
+            // Swipe a la derecha (anterior)
+            prevBanner();
+        } else {
+            // No fue un swipe válido, volver al banner actual
+            showBanner(currentBannerIndex);
+        }
+    });
+
+    carouselInner.addEventListener('mouseleave', () => {
+        if (isDragging) {
+            isDragging = false;
+            carouselInner.style.cursor = 'grab';
+            carouselInner.style.transition = 'transform 0.5s ease-in-out';
+            showBanner(currentBannerIndex); // Volver al banner actual si el mouse sale del carrusel
+        }
+    });
+ 
+     // --- Funciones del Carrito de Compras ---
+ 
+     function saveCartToLocalStorage() {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
 
@@ -317,26 +410,33 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' }); // Desplazarse al inicio de la página
     });
 
-    // Manejo de clic en enlaces de categoría en el sidebar
-    const sidebarLeft = document.querySelector('.sidebar-left');
-    if (sidebarLeft) {
-        sidebarLeft.addEventListener('click', (e) => {
+    // --- Manejo del filtro de categorías en la sidebar ---
+    const categoryNav = document.querySelector('.category-nav');
+
+    if (categoryNav) {
+        categoryNav.addEventListener('click', (e) => {
             if (e.target.classList.contains('category-link')) {
-                e.preventDefault(); // Prevenir el comportamiento por defecto del enlace
-                // Eliminar 'active' de todos los enlaces de categoría
+                e.preventDefault();
+                
+                // Quitar la clase 'active' de todos los enlaces y añadirla al que se hizo clic
                 document.querySelectorAll('.category-link').forEach(link => link.classList.remove('active'));
-                // Añadir 'active' al enlace clicado
                 e.target.classList.add('active');
 
-                const category = e.target.dataset.category;
-                currentCategory = category || 'all'; // Si no hay data-category, asume 'all'
-                currentPage = 1; // Resetear a la primera página al cambiar de categoría
+                // Actualizar la categoría y renderizar los productos
+                currentCategory = e.target.dataset.category;
+                currentPage = 1; // Resetear a la primera página
                 filterAndPaginateProducts();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
     }
 
+
+    // --- Manejo del menú móvil ---
+    if (mobileMenuToggle && mainNavigation) {
+        mobileMenuToggle.addEventListener('click', () => {
+            mainNavigation.classList.toggle('is-open');
+        });
+    }
 
     // --- Inicialización ---
     showBanner(currentBannerIndex); // Muestra el primer banner
