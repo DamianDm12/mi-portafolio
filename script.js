@@ -3,6 +3,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const mainNavigation = document.querySelector('.main-navigation');
 
+    // Manejo del menú móvil
+    mobileMenuToggle.addEventListener('click', () => {
+        mainNavigation.classList.toggle('active');
+    });
+
+    // Cerrar menú al hacer clic en un enlace
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            mainNavigation.classList.remove('active');
+        });
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!mainNavigation.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+            mainNavigation.classList.remove('active');
+        }
+    });
+
     // --- Referencias a elementos del DOM para el carrito ---
     const cartIcon = document.querySelector('.cart-link');
     const cartCountSpan = document.querySelector('.cart-count');
