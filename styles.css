@@ -39,6 +39,8 @@ body {
     font-weight: 800;
     color: #ffcdd2; /* Rosa más claro para el logo */
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    text-align: center;
+    margin: 0 auto;
 }
 
 .main-navigation .nav-list {
@@ -78,8 +80,10 @@ body {
 
 /* Estilos para el contenedor del carrito */
 .cart-icon-container {
-    position: relative;
-    margin-left: 2rem; /* Espacio a la izquierda de la navegación */
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .cart-link {
@@ -123,6 +127,63 @@ body {
     font-size: 2rem;
     cursor: pointer;
     padding: 0.5rem;
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Estilos para móvil */
+@media screen and (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .main-navigation {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #e91e63;
+        padding: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .main-navigation.active {
+        display: block;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-list li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 1rem 0;
+    }
+
+    .site-content-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar-left {
+        position: static;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .site-logo {
+        font-size: 1.8rem;
+        margin: 0 auto;
+        padding: 0 4rem;
+    }
 }
 
 
