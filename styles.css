@@ -14,7 +14,7 @@ body {
 
 /* Header / Barra de Navegación */
 .site-header {
-    background-color: #e91e63; /* Rosa fuerte para el header */
+    background: #ec2678; /* o el color rosa que prefieras */
     color: #ffffff; /* Texto blanco */
     padding: 1rem 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -100,8 +100,10 @@ body {
 
 /* Estilos para el contenedor del carrito */
 .cart-icon-container {
-    position: static;
-    margin-left: auto; /* empuja el carrito a la derecha en el flex */
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 1001;
 }
 
@@ -120,14 +122,15 @@ body {
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    background-color: #f06292;
-    transition: background-color 0.3s ease;
+    background: #f48fb1; /* rosa claro, ajusta si quieres */
+    transition: background 0.2s;
     white-space: nowrap;
 }
 
 
 .cart-link:hover {
-    background-color: #e91e63; /* Oscurece al pasar el ratón */
+    background: #ec2678; /* mismo rosa que el header para el hover */
+    color: #fff;
 }
 
 .cart-count {
