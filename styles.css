@@ -100,10 +100,8 @@ body {
 
 /* Estilos para el contenedor del carrito */
 .cart-icon-container {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
+    position: static;
+    margin-left: auto; /* empuja el carrito a la derecha en el flex */
     z-index: 1001;
 }
 
