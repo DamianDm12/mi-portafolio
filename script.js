@@ -94,19 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
         showBanner(currentBannerIndex);
     }
 
-    function prevBanner() {
-        currentBannerIndex = (currentBannerIndex - 1 + totalBanners) % totalBanners;
-        showBanner(currentBannerIndex);
-    }
-
-    // Navegación del carrusel
-    if(prevButton && nextButton) {
-        prevButton.addEventListener('click', prevBanner);
-        nextButton.addEventListener('click', nextBanner);
-    }
-
-    // Auto-avance del carrusel
-    setInterval(nextBanner, 5000); // Cambia cada 5 segundos
+    // Configuración del carrusel
+    const CAROUSEL_INTERVAL = 12000; // 12 segundos entre cada transición
+    let autoAdvance = setInterval(nextBanner, CAROUSEL_INTERVAL);
 
     // --- Funcionalidad Táctil para el Carrusel ---
     let touchStartX = 0;
@@ -117,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         touchStartX = e.touches[0].clientX;
         isSwiping = true;
         carouselInner.style.transition = 'none'; // Desactivar transición durante el swipe
+        clearInterval(autoAdvance); // Detener el auto-avance durante el swipe
     });
 
     carouselInner.addEventListener('touchmove', (e) => {
@@ -130,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isSwiping) return;
         touchEndX = e.changedTouches[0].clientX;
         isSwiping = false;
-        carouselInner.style.transition = 'transform 0.5s ease-in-out'; // Reactivar transición
+        carouselInner.style.transition = 'transform 0.3s ease-out'; // Reactivar transición
 
         const swipeThreshold = 50; // Mínimo de 50px para considerarse un swipe
 
@@ -139,11 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
             nextBanner();
         } else if (touchEndX - touchStartX > swipeThreshold) {
             // Swipe a la derecha (anterior)
-            prevBanner();
+            currentBannerIndex = (currentBannerIndex - 1 + totalBanners) % totalBanners;
+            showBanner(currentBannerIndex);
         } else {
             // No fue un swipe válido, volver al banner actual
             showBanner(currentBannerIndex);
         }
+
+        // Reanudar el auto-avance después del swipe
+        clearInterval(autoAdvance);
+        autoAdvance = setInterval(nextBanner, CAROUSEL_INTERVAL);
     });
  
     // --- Funcionalidad de Arrastre con Mouse para el Carrusel ---
@@ -156,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dragStartX = e.clientX;
         carouselInner.style.cursor = 'grabbing';
         carouselInner.style.transition = 'none'; // Desactivar transición durante el arrastre
+        clearInterval(autoAdvance); // Detener el auto-avance durante el arrastre
     });
 
     carouselInner.addEventListener('mousemove', (e) => {
@@ -170,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isDragging = false;
         dragEndX = e.clientX;
         carouselInner.style.cursor = 'grab';
-        carouselInner.style.transition = 'transform 0.5s ease-in-out'; // Reactivar transición
+        carouselInner.style.transition = 'transform 0.3s ease-out'; // Reactivar transición
 
         const swipeThreshold = 50; // Mínimo de 50px para considerarse un swipe
 
@@ -179,19 +176,27 @@ document.addEventListener('DOMContentLoaded', () => {
             nextBanner();
         } else if (dragEndX - dragStartX > swipeThreshold) {
             // Swipe a la derecha (anterior)
-            prevBanner();
+            currentBannerIndex = (currentBannerIndex - 1 + totalBanners) % totalBanners;
+            showBanner(currentBannerIndex);
         } else {
             // No fue un swipe válido, volver al banner actual
             showBanner(currentBannerIndex);
         }
+
+        // Reanudar el auto-avance después del arrastre
+        clearInterval(autoAdvance);
+        autoAdvance = setInterval(nextBanner, CAROUSEL_INTERVAL);
     });
 
     carouselInner.addEventListener('mouseleave', () => {
         if (isDragging) {
             isDragging = false;
             carouselInner.style.cursor = 'grab';
-            carouselInner.style.transition = 'transform 0.5s ease-in-out';
+            carouselInner.style.transition = 'transform 0.3s ease-out';
             showBanner(currentBannerIndex); // Volver al banner actual si el mouse sale del carrusel
+            // Reanudar el auto-avance
+            clearInterval(autoAdvance);
+            autoAdvance = setInterval(nextBanner, CAROUSEL_INTERVAL);
         }
     });
  
