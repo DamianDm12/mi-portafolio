@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - Mi Tienda Rosita</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-content">
+            <h1 class="site-logo">Mi Tienda Rosita</h1>
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li><a href="sobre-nosotros.html" class="nav-link active">Sobre la Tienda</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon-container">
+                <a href="#" class="cart-link" aria-label="Carrito de compras">
+                    <i class="fas fa-shopping-cart"></i><span class="cart-text">Carrito</span><span class="cart-count">0</span>
+                </a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Abrir menú móvil">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <main class="main-content-placeholder">
+            <h2 class="section-title">Nuestra Historia: La Magia de Mi Tienda Rosita</h2>
+            <section class="about-us-content">
+                <p>En el corazón de cada hogar moderno y vibrante, nace la necesidad de un toque de estilo, funcionalidad y alegría. Así, con una visión clara de transformar los espacios y enriquecer la vida diaria, surgió <strong>Mi Tienda Rosita</strong>. Desde nuestros inicios, nos hemos dedicado a curar una selección excepcional de productos que combinan lo último en tecnología con la estética más encantadora.</p>
+                
+                <p>Nos especializamos en brindar una experiencia de compra única, donde la calidad se encuentra con el diseño. Nuestra gama de productos abarca desde innovadores <strong>electrodomésticos</strong> que simplifican tu día a día con un toque de color y eficiencia, hasta las últimas tendencias en <strong>ropa</strong>, cuidadosamente seleccionada para ofrecerte comodidad y estilo en cada prenda.</p>
+                
+                <p>Pero no nos detenemos ahí. En Mi Tienda Rosita, creemos que los pequeños detalles hacen la gran diferencia. Por eso, también ofrecemos una variada colección de <strong>otros artículos</strong>, incluyendo accesorios únicos, decoración inspiradora para cada rincón de tu hogar, y gadgets divertidos que te sorprenderán. Cada pieza en nuestro inventario es elegida pensando en ti, buscando siempre ese equilibrio perfecto entre practicidad y belleza.</p>
+                
+                <p>Nuestro compromiso es con la satisfacción del cliente. Nos esforzamos por crear un espacio donde encuentres justo lo que necesitas, con la confianza de que cada compra es una inversión en calidad y felicidad. Con un equipo apasionado y dedicado, Mi Tienda Rosita es más que una tienda; es un destino donde la innovación, la moda y el estilo se fusionan para crear momentos memorables en tu vida.</p>
+                
+                <p>¡Gracias por ser parte de nuestra historia rosita!</p>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal del carrito (igual que en index, productos y contacto) -->
+    <div id="shopping-cart-modal" class="cart-modal" style="display:none;">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart-button">&times;</button>
+            </div>
+            <ul id="cart-items-list" class="cart-items-list">
+                <!-- Los productos del carrito se insertan aquí -->
+            </ul>
+            <div class="cart-summary">
+                <p>Total: <span id="cart-total">$0.00</span></p>
+                <div class="cart-actions">
+                    <button id="clear-cart-btn" class="clear-cart-button">Vaciar Carrito</button>
+                    <button class="checkout-button">Comprar por WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <a href="https://wa.me/542255445566?text=Quiero%20hacer%20un%20pedido%20desde%20tu%20tienda%20online!" class="whatsapp-flotante" target="_blank" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+</html>
