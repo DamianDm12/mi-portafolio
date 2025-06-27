@@ -15,10 +15,10 @@
             <h1 class="site-logo">Mi Tienda Rosita</h1>
             <nav class="main-navigation">
                 <ul class="nav-list">
-                    <li><a href="#" class="nav-link">Inicio</a></li>
-                    <li><a href="#" class="nav-link">Productos</a></li>
-                    <li><a href="#" class="nav-link">Sobre la Tienda</a></li>
-                    <li><a href="#" class="nav-link">Contacto</a></li>
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li><a href="Sobrelatienda.html" class="nav-link">Sobre la Tienda</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
                 </ul>
             </nav>
             <div class="cart-icon-container">
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <h2 class="section-title">Nuestros Productos</h2>
+            <h2 class="section-title">Productos Destacados</h2>
             <div class="static-products-grid" id="products-grid">
                 </div>
             <div id="pagination-controls" class="pagination-controls">
@@ -83,6 +83,22 @@
             </div>
         </div>
     </div>
+
+    <!-- Botón flotante de categorías -->
+    <button class="floating-categories-btn" aria-label="Categorías">
+        <i class="fas fa-th-large"></i>
+    </button>
+    <!-- Menú popup de categorías -->
+    <nav class="floating-categories-popup">
+        <a href="#" data-category="all" class="category-link active">Todas</a>
+        <a href="#" data-category="electronica" class="category-link">Electrónica</a>
+        <a href="#" data-category="ropa" class="category-link">Ropa</a>
+        <a href="#" data-category="hogar" class="category-link">Hogar</a>
+        <a href="#" data-category="libros" class="category-link">Libros</a>
+        <a href="#" data-category="juguetes" class="category-link">Juguetes</a>
+        <a href="#" data-category="deportes" class="category-link">Deportes</a>
+        <a href="#" data-category="belleza" class="category-link">Belleza</a>
+    </nav>
 
     <script src="script.js"></script>
     <a href="https://wa.me/542255445566?text=Quiero%20informacion" class="whatsapp-flotante" target="_blank">
