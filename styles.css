@@ -1100,3 +1100,9 @@ body {
 .contact-info a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+    .main-navigation .nav-list {
+        padding-left: 24px; /* Ajusta el valor según lo que necesites */
+    }
+}
